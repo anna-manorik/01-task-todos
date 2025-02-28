@@ -17,6 +17,5 @@ addTaskBtn.addEventListener('click', (e) => {
         status: statusTodo.value
     }
 
-    // console.log("todoList", todoList)
     localStorage.setItem("todoList", JSON.stringify([newTodo, ...todoList]));
 })

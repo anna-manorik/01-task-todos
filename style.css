@@ -1,0 +1,8 @@
+li {
+    list-style: none;
+}
+
+.delete-btn {
+    border: none;
+    background: none;
+}

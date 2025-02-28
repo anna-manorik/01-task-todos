@@ -1,7 +1,7 @@
 import { nanoid } from './node_modules/nanoid/nanoid.js';
 
 const description = document.getElementById("description");
-const priority = document.getElementById("priority");
+const priorityTodo = document.getElementById("priority");
 const statusTodo = document.getElementById("status");
 const addTaskBtn = document.getElementById("addTaskBtn");
 const todoListUl = document.getElementById("todoList");
@@ -21,7 +21,7 @@ function createTask({ description, priority, status, id }) {
     const li = document.createElement("li");
     li.innerHTML = `
         <span>${description}</span>
-        <select id="priority">
+        <select id="priorityTodo">
             <option>${priority}</option>
             <option>ASAP</option>
             <option>Highest</option>
@@ -29,7 +29,7 @@ function createTask({ description, priority, status, id }) {
             <option>Medium</option>
             <option>Low</option>
         </select>
-        <select id="status">
+        <select id="statusTodo">
             <option>${status}</option>
             <option>ToDo</option>
             <option>In Progress</option>
@@ -43,7 +43,27 @@ function createTask({ description, priority, status, id }) {
         deleteTask(id);
     });
 
+    li.querySelector("#priorityTodo").addEventListener('change', (e) => {
+        updatePriority(e.target.value, id)
+    })
+
+    li.querySelector("#statusTodo").addEventListener('change', (e) => {
+        updateStatus(e.target.value, id)
+    })
+
     return li
+}
+
+function updatePriority(newPriority, todoId) {
+    let todoList = JSON.parse(localStorage.getItem('todoList'));
+    todoList = todoList.map(todo => todo.id === todoId ? { ...todo, priority: newPriority } : todo )
+    localStorage.setItem("todoList", JSON.stringify(todoList));
+}
+
+function updateStatus(newStatus, todoId) {
+    let todoList = JSON.parse(localStorage.getItem('todoList'));
+    todoList = todoList.map(todo => todo.id === todoId ? { ...todo, status: newStatus } : todo )
+    localStorage.setItem("todoList", JSON.stringify(todoList));
 }
 
 function deleteTask(todoItemId) {
@@ -62,7 +82,7 @@ addTaskBtn.addEventListener('click', (e) => {
     const newTodo = {
         id: nanoid(),
         description: description.value,
-        priority: priority.value,
+        priority: priorityTodo.value,
         status: statusTodo.value
     }
     const li = createTask(newTodo)

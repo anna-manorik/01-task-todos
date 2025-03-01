@@ -1,4 +1,6 @@
 import { nanoid } from './node_modules/nanoid/nanoid.js';
+// import toastr from "./node_modules/toastr";
+// import "toastr/build/toastr.min.css";
 
 const description = document.getElementById("description");
 const priorityTodo = document.getElementById("priority");
@@ -26,10 +28,15 @@ addTaskBtn.addEventListener('click', (e) => {
         status: statusTodo.value
     }
 
+    if(description.value === '') {
+        toastr.error('Please, fill description!');
+        return
+    }
+
     const li = createTask(newTodo);
 
     localStorage.setItem("todoList", JSON.stringify([newTodo, ...todoList]));
-
+    toastr.success('New task was created successfully!')
     description.value = ''
 })
 
@@ -119,9 +126,8 @@ function deleteTask(todoItemId) {
     let todoList = JSON.parse(localStorage.getItem('todoList'));
 
     todoList = todoList.filter(todo => todo.id !== todoItemId)
-    console.log("todoList!!!!", todoList)
-
     localStorage.setItem("todoList", JSON.stringify(todoList));
+    toastr.success('Task was deleted successfully!')
 }
 
 

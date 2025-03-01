@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Server Test</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body>
     <h1>I'm your ToDoList</h1>
@@ -28,9 +29,10 @@
             <option>Done</option>
         </select>
 
-        <label>Description</label><br />
+        <label>Description*</label><br />
         <textarea id="description"></textarea>
-
+        <span class="notice">*required</span>
+        
         <button id="addTaskBtn" >SAVE</button>
     </form>
 
@@ -44,5 +46,7 @@
     <ul id="todoList"></ul>
 
     <script type="module" src="index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </body>
 </html>

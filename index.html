@@ -9,28 +9,25 @@
 <body>
     <h1>I'm your ToDoList</h1>
 
-    <form >
-        <label>Description</label><br />
-        <textarea id="description"></textarea>
-        <br />
-        
+    <form id="form">
         <label>Priority</label>
-        <select id="priority">
+        <select id="priority" class="select">
             <option>ASAP</option>
             <option>Highest</option>
             <option>High</option>
             <option>Medium</option>
             <option>Low</option>
         </select>
-        <br />
 
         <label>Status</label>
-        <select id="status">
+        <select id="status" class="select">
             <option>ToDo</option>
             <option>In Progress</option>
             <option>Done</option>
         </select>
-        <br /><br />
+
+        <label>Description</label><br />
+        <textarea id="description"></textarea>
 
         <button id="addTaskBtn" >SAVE</button>
     </form>

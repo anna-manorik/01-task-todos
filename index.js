@@ -17,10 +17,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+addTaskBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    let todoList = JSON.parse(localStorage.getItem('todoList')) || [];
+    const newTodo = {
+        id: nanoid(),
+        description: description.value,
+        priority: priorityTodo.value,
+        status: statusTodo.value
+    }
+
+    const li = createTask(newTodo);
+    todoListUl.appendChild(li);
+
+    localStorage.setItem("todoList", JSON.stringify([newTodo, ...todoList]));
+
+    description.value = ''
+})
+
 function createTask({ description, priority, status, id }) {
     const li = document.createElement("li");
     li.innerHTML = `
-        <span>${description}</span>
+        <span class="description">${description}</span>
         <select id="priorityTodo">
             <option>${priority}</option>
             <option>ASAP</option>
@@ -75,20 +94,6 @@ function deleteTask(todoItemId) {
     localStorage.setItem("todoList", JSON.stringify(todoList));
 }
 
-addTaskBtn.addEventListener('click', (e) => {
-    e.preventDefault();
 
-    let todoList = JSON.parse(localStorage.getItem('todoList')) || [];
-    const newTodo = {
-        id: nanoid(),
-        description: description.value,
-        priority: priorityTodo.value,
-        status: statusTodo.value
-    }
-    const li = createTask(newTodo)
-    todoListUl.appendChild(li);
-    localStorage.setItem("todoList", JSON.stringify([newTodo, ...todoList]));
-    description.value = ''
-})
 
 

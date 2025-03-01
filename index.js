@@ -5,16 +5,14 @@ const priorityTodo = document.getElementById("priority");
 const statusTodo = document.getElementById("status");
 const addTaskBtn = document.getElementById("addTaskBtn");
 const todoListUl = document.getElementById("todoList");
-
+const sortBtn = document.getElementById("sort");
 
 document.addEventListener("DOMContentLoaded", () => {
-    const todoList = JSON.parse(localStorage.getItem('todoList'));
+    if(localStorage.getItem('todoList')) {
+        const todoList = JSON.parse(localStorage.getItem('todoList'));
 
-    todoList.forEach(todoItem => {
-        const li = createTask(todoItem);
-        todoListUl.appendChild(li);
-    });
-
+        todoList.forEach(todoItem => createTask(todoItem));
+    }
 });
 
 addTaskBtn.addEventListener('click', (e) => {
@@ -29,11 +27,41 @@ addTaskBtn.addEventListener('click', (e) => {
     }
 
     const li = createTask(newTodo);
-    todoListUl.appendChild(li);
 
     localStorage.setItem("todoList", JSON.stringify([newTodo, ...todoList]));
 
     description.value = ''
+})
+
+sortBtn.addEventListener('change', (e) => {
+    let todoList = JSON.parse(localStorage.getItem('todoList'));
+
+    const priorityLevels = { 
+        "ASAP": 0, 
+        "Highest": 1, 
+        "High": 2,
+        "Medium": 3, 
+        "Low": 4, 
+    };
+
+    if(e.target.value === 'To the highest') {
+        todoList = todoList.sort((firstTodo, secondTodo) => {
+            return priorityLevels[secondTodo.priority] - priorityLevels[firstTodo.priority]
+        })
+        todoListUl.innerHTML = '';
+        todoList.forEach(todo => createTask(todo));
+        localStorage.setItem("todoList", JSON.stringify(todoList));
+    } else if (e.target.value === 'To the lowest') {
+        todoList = todoList.sort((firstTodo, secondTodo) => {
+            return priorityLevels[firstTodo.priority] - priorityLevels[secondTodo.priority]
+        })
+        todoListUl.innerHTML = '';
+        todoList.forEach(todo => createTask(todo));
+        localStorage.setItem("todoList", JSON.stringify(todoList));
+    } else {
+        return
+    }
+    
 })
 
 function createTask({ description, priority, status, id }) {
@@ -50,7 +78,7 @@ function createTask({ description, priority, status, id }) {
         </select>
         <select id="statusTodo">
             <option>${status}</option>
-            <option>ToDo</option>
+            <option >ToDo</option>
             <option>In Progress</option>
             <option>Done</option>
         </select>
@@ -69,6 +97,8 @@ function createTask({ description, priority, status, id }) {
     li.querySelector("#statusTodo").addEventListener('change', (e) => {
         updateStatus(e.target.value, id)
     })
+
+    todoListUl.appendChild(li);
 
     return li
 }
@@ -93,7 +123,6 @@ function deleteTask(todoItemId) {
 
     localStorage.setItem("todoList", JSON.stringify(todoList));
 }
-
 
 
 

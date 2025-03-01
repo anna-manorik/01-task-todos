@@ -12,6 +12,7 @@
     <form id="form">
         <label>Priority</label>
         <select id="priority" class="select">
+            <option></option>
             <option>ASAP</option>
             <option>Highest</option>
             <option>High</option>
@@ -21,6 +22,7 @@
 
         <label>Status</label>
         <select id="status" class="select">
+            <option></option>
             <option>ToDo</option>
             <option>In Progress</option>
             <option>Done</option>
@@ -31,6 +33,13 @@
 
         <button id="addTaskBtn" >SAVE</button>
     </form>
+
+    <label id="sort-label">Sort by priority: </label>
+        <select id="sort" class="select">
+            <option></option>
+            <option>To the highest</option>
+            <option>To the lowest</option>
+        </select>
 
     <ul id="todoList"></ul>
 

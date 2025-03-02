@@ -1,6 +1,4 @@
 import { nanoid } from './node_modules/nanoid/nanoid.js';
-// import toastr from "./node_modules/toastr";
-// import "toastr/build/toastr.min.css";
 
 const description = document.getElementById("description");
 const priorityTodo = document.getElementById("priority");
@@ -33,7 +31,7 @@ addTaskBtn.addEventListener('click', (e) => {
         return
     }
 
-    const li = createTask(newTodo);
+    createTask(newTodo);
 
     localStorage.setItem("todoList", JSON.stringify([newTodo, ...todoList]));
     toastr.success('New task was created successfully!')
